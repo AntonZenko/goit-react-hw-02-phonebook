@@ -23,7 +23,7 @@ function ContactList({ contacts, filter, deleteContact }) {
               name={name}
               number={number}
               key={id}
-              handleClick={() => deleteContact(id)}
+              handleClick={() => deleteContact(id, name)}
             />
           ))}
     </List>

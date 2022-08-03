@@ -4,6 +4,7 @@ import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Section from './Section';
 import Filter from './Filter';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 class App extends Component {
   state = {
@@ -16,10 +17,11 @@ class App extends Component {
     filter: '',
   };
 
-  deleteContact = id => {
+  deleteContact = (id, name) => {
     this.setState({
       contacts: [...this.state.contacts.filter(contact => contact.id !== id)],
     });
+    Notify.failure(`${name} deleted from your phonebook`, { timeout: 2000 });
   };
 
   handleFilterChange = event => {
@@ -30,7 +32,7 @@ class App extends Component {
 
   addContact = data => {
     return this.state.contacts.map(contact => contact.name).includes(data.name)
-      ? alert(`${data.name} is already in contacts`)
+      ? Notify.warning(`${data.name} is already in contacts`, { timeout: 2000 })
       : this.setState(prevState => ({
           contacts: [...prevState.contacts, data],
         }));
